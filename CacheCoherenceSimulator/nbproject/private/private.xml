@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/Dragon.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/Processor.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/Exec.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/MESI.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/SimulatorWindow.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/ProtocolEnum.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/MERSI.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/ProtocolInterface.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/LocalCacheBlock.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/StateEnum.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/EvalParam.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/Firefly.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/SharedMemory.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/MSI.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/protocols/MOSI.java</file>
+            <file>file:/C:/Users/Siddhant%20Kulkarni/Documents/NetBeansProjects/CacheCoherenceSimulator/src/cachecoherencesimulator/Bus.java</file>
+        </group>
+    </open-files>
+</project-private>
