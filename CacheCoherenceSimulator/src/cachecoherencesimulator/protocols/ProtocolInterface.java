@@ -7,7 +7,7 @@ package cachecoherencesimulator.protocols;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public interface ProtocolInterface{
     public int numberOfStates=0;

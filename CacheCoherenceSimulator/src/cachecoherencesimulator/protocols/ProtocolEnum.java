@@ -7,8 +7,8 @@ package cachecoherencesimulator.protocols;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public enum ProtocolEnum{
-    MSI,MOSI,MESI,MERSI,DRAGON,FIREFLY;
+    MSI,MOSI,MESI,MERSI,DRAGON,FIREFLY;// set of protocol
 }

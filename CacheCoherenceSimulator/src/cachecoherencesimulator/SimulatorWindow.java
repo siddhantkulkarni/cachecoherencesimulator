@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 class ThreadRunner extends Thread {
 
@@ -25,7 +25,7 @@ class ThreadRunner extends Thread {
     public void run() {
         try {
             if (scenario.trim().length() != 0) {
-                Exec.executeScenario(scenario);
+                Exec.executeScenario(scenario);// use the generated sequence and starts the execution
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
@@ -41,7 +41,7 @@ public class SimulatorWindow extends javax.swing.JFrame {
      */
     public static EvalParam evaluator;
 
-    public static void updateEvalParamBox() {
+    public static void updateEvalParamBox() { // print the actual output at the "experimental result" block of the simulator
         String eval = "";
         eval += "Cache Misses:\n";
         eval += "\tRead Misses:\t" + evaluator.cacheReadMisses;
@@ -457,7 +457,7 @@ public class SimulatorWindow extends javax.swing.JFrame {
     private void jTxtPerProcBlocksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPerProcBlocksActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtPerProcBlocksActionPerformed
-    public static void setControllerState(boolean flag) {
+    public static void setControllerState(boolean flag) {// this function is used to enable or disable all the frame works in the simulator
         jTxtNumBlockMainMemory.setEnabled(flag);
         jBtnAnalyze.setEnabled(flag);
         jTxtNumOps.setEnabled(flag);
@@ -481,68 +481,68 @@ public class SimulatorWindow extends javax.swing.JFrame {
     private void jTxtNumProcFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumProcFocusLost
         // TODO add your handling code here:
 
-        String numProc = jTxtNumProc.getText();
+        String numProc = jTxtNumProc.getText(); // gets the number of processors entered in the text field
         try {
-            UserChoices.numberOfProcessors = Integer.parseInt(numProc);
-            if (UserChoices.numberOfProcessors < 2) {
-                JOptionPane.showMessageDialog(null, "You need at least 2 processors!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-                jTxtNumProc.setText("2");
-                UserChoices.numberOfProcessors = 2;
+            UserChoices.numberOfProcessors = Integer.parseInt(numProc);// convert the string to integer and sets the number of processors as two
+            if (UserChoices.numberOfProcessors < 2) {// checks if the number of processors entered is more than or equal to two
+                JOptionPane.showMessageDialog(null, "You need at least 2 processors!", "Validation", JOptionPane.INFORMATION_MESSAGE);// if above condition is true then error meaage will be displayed
+                jTxtNumProc.setText("2");// the deafult number of processors when above condition is true is two
+                UserChoices.numberOfProcessors = 2;//sets the number of processors as two in userchoice class
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-            jTxtNumProc.setText("2");
-            UserChoices.numberOfProcessors = 2;
+            JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);//if there is any exception occured in the above try block then error message will be displayed
+            jTxtNumProc.setText("2");// the deafult number of processors that will be set in the text field will be two
+            UserChoices.numberOfProcessors = 2;// sets the number of processor as two in userchoice class
         }
-        SimulatorWindow.updateNumberOfProcessors(UserChoices.numberOfProcessors);
+        SimulatorWindow.updateNumberOfProcessors(UserChoices.numberOfProcessors);// update the number of processor entered in the text field to the comb box to select the processor
     }//GEN-LAST:event_jTxtNumProcFocusLost
     public static void updateNumberOfProcessors(int numProc) {
-        SimulatorWindow.jCmbProc.removeAllItems();
+        SimulatorWindow.jCmbProc.removeAllItems();//clear the items in the combo box
         for (int i = 0; i < numProc; i++) {
-            SimulatorWindow.jCmbProc.addItem("P-" + i);
+            SimulatorWindow.jCmbProc.addItem("P-" + i);// add the entered number of processors in the combo box
         }
     }
     private void jTxtPerProcBlocksFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtPerProcBlocksFocusLost
         // TODO add your handling code here:
-        String temp = jTxtPerProcBlocks.getText();
+        String temp = jTxtPerProcBlocks.getText();//get the number of blocks(local cache) entered in the text field of the simulator
         try {
-            UserChoices.numberOfBlocksLocal = Integer.parseInt(temp);
+            UserChoices.numberOfBlocksLocal = Integer.parseInt(temp);// convert the number of blocks entered in text field from string to integer and sets to number of blocks in userchoice class
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-            jTxtPerProcBlocks.setText("2");
+            JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);// when exception occured in the abive try block the eroor message will be diaplyed
+            jTxtPerProcBlocks.setText("2");// sets the default number of blocks when exception occured
             UserChoices.numberOfBlocksLocal = 2;
         }
     }//GEN-LAST:event_jTxtPerProcBlocksFocusLost
 
     private void jTxtNumBlockMainMemoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumBlockMainMemoryFocusLost
         // TODO add your handling code here
-        String temp = jTxtNumBlockMainMemory.getText();
+        String temp = jTxtNumBlockMainMemory.getText();// number of blocks in main memory
         try {
-            UserChoices.numberOfBlocksMain = Integer.parseInt(temp);
+            UserChoices.numberOfBlocksMain = Integer.parseInt(temp); // sets the number of blocks in main memory
 
-        } catch (Exception e) {
+        } catch (Exception e) {// 
             JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-            jTxtNumBlockMainMemory.setText("2");
+            jTxtNumBlockMainMemory.setText("2");// sets the default number of blocks in main memory when the exception occured
             UserChoices.numberOfBlocksMain = 2;
         }
-        SimulatorWindow.updateNumberOfBlocks(UserChoices.numberOfBlocksMain);
+        SimulatorWindow.updateNumberOfBlocks(UserChoices.numberOfBlocksMain);// update the number of blocks in main memory to combo box to select the block from the main memory
     }//GEN-LAST:event_jTxtNumBlockMainMemoryFocusLost
     public static void updateNumberOfBlocks(int numBlocks) {
-        SimulatorWindow.jCmbBlock.removeAllItems();
+        SimulatorWindow.jCmbBlock.removeAllItems();// clear the iteams from the combo box
         for (int i = 0; i < numBlocks; i++) {
-            SimulatorWindow.jCmbBlock.addItem("B-" + i);
+            SimulatorWindow.jCmbBlock.addItem("B-" + i);// add the entered number of blocks in the combo box
         }
     }
     private void jTxtWriteBackFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtWriteBackFocusLost
         // TODO add your handling code here:
-        String temp = jTxtWriteBack.getText();
+        String temp = jTxtWriteBack.getText();// get the writeback delay
         try {
-            UserChoices.wbDelay = Double.parseDouble(temp);
+            UserChoices.wbDelay = Double.parseDouble(temp);// sets the write back dealay to userchoice class
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-            jTxtWriteBack.setText("0");
+            jTxtWriteBack.setText("0");// sets the default wrtieback when the exception occured
             UserChoices.wbDelay = 0;
 
         }
@@ -550,48 +550,48 @@ public class SimulatorWindow extends javax.swing.JFrame {
 
     private void jTxtNumOpsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumOpsFocusLost
         // TODO add your handling code here:
-        String temp = jTxtNumOps.getText();
+        String temp = jTxtNumOps.getText();// get the number of operation that has to be performed
         try {
             int x = Integer.parseInt(temp);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-            jTxtNumOps.setText("1");
+            jTxtNumOps.setText("1");// sets the default number of operation when the exception occured
 
         }
     }//GEN-LAST:event_jTxtNumOpsFocusLost
 
     private void jTxtValFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValFocusLost
         // TODO add your handling code here:
-        String temp = jTxtVal.getText();
+        String temp = jTxtVal.getText();// get the value that has to be written to the block when the write operation is selected
         try {
-            int x = Integer.parseInt(temp);
+            int x = Integer.parseInt(temp);// coveret the value from string to integer
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Incorrect Value Entered!", "Validation", JOptionPane.INFORMATION_MESSAGE);
-            jTxtVal.setText("0");
+            jTxtVal.setText("0");// sets the default value when the exception occured
 
         }
     }//GEN-LAST:event_jTxtValFocusLost
 
     private void jCmbProtocolFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCmbProtocolFocusLost
         // TODO add your handling code here:
-        switch (jCmbProtocol.getSelectedIndex()) {
+        switch (jCmbProtocol.getSelectedIndex()) {// selects the protocol that has been selected by the user
             case 0:
-                UserChoices.protocol = ProtocolEnum.MSI;
+                UserChoices.protocol = ProtocolEnum.MSI;// sets the userchioce protocl to MSI when MSI is selected
                 break;
             case 1:
-                UserChoices.protocol = ProtocolEnum.MOSI;
+                UserChoices.protocol = ProtocolEnum.MOSI;// sets the userchioce protocl to MOSI when MOSI is selected
                 break;
             case 2:
-                UserChoices.protocol = ProtocolEnum.MESI;
+                UserChoices.protocol = ProtocolEnum.MESI;// sets the userchioce protocl to MESI when MESI is selected
                 break;
             case 3:
-                UserChoices.protocol = ProtocolEnum.MERSI;
+                UserChoices.protocol = ProtocolEnum.MERSI;// sets the userchioce protocl to MERSI when MERSI is selected
                 break;
             case 4:
-                UserChoices.protocol = ProtocolEnum.DRAGON;
+                UserChoices.protocol = ProtocolEnum.DRAGON;// sets the userchioce protocl to DRAGON when DRAGON is selected
                 break;
             case 5:
-                UserChoices.protocol = ProtocolEnum.FIREFLY;
+                UserChoices.protocol = ProtocolEnum.FIREFLY;// sets the userchioce protocl to FIREFLY when FIREFLY is selected
                 break;
 
         }
@@ -601,26 +601,26 @@ public class SimulatorWindow extends javax.swing.JFrame {
 
     private void jBtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnInsertActionPerformed
         // TODO add your handling code here:
-        String seq = "";
-        seq = seq + jCmbProc.getSelectedItem() + ":" + jCmbBlock.getSelectedItem() + ":";
-        if (jCmbOp.getSelectedIndex() == 0) {
-            seq += "R";
+        String seq = "";// the sequence is set to null 
+        seq = seq + jCmbProc.getSelectedItem() + ":" + jCmbBlock.getSelectedItem() + ":";// add the processor number and the block number to teh sequence
+        if (jCmbOp.getSelectedIndex() == 0) {// checks if the read operation is selected or write operation
+            seq += "R";// add read operation to the sequence
         } else {
-            seq = seq + "W:" + jTxtVal.getText();
+            seq = seq + "W:" + jTxtVal.getText();// add write operation to the sequence along with the value that has to be written
         }
 
-        String temp = jTxtScenario.getText();
+        String temp = jTxtScenario.getText(); 
         if (temp.length() == 0) {
-            jTxtScenario.setText(seq);
+            jTxtScenario.setText(seq);// enter the generated sequence to the text field
         } else {
-            jTxtScenario.setText(temp + "," + seq);
+            jTxtScenario.setText(temp + "," + seq);// enter the set of opeartion which will be separated by comma operator to the tex field
         }
     }//GEN-LAST:event_jBtnInsertActionPerformed
 
     private void jBtnValidityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnValidityActionPerformed
         // TODO add your handling code here:
         String msg = "";
-        if ((msg = SimulatorWindow.isScenarioValid(jTxtScenario.getText())).equals("YES")) {
+        if ((msg = SimulatorWindow.isScenarioValid(jTxtScenario.getText())).equals("YES")) {// checks if the the generated sequence is in the valid format
             JOptionPane.showMessageDialog(null, "Scenario is valid!\nGo ahead with exection.", "Validation", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
@@ -631,11 +631,11 @@ public class SimulatorWindow extends javax.swing.JFrame {
 
     private void jBtnBeginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBeginActionPerformed
         String msg = "";
-        if ((msg = isScenarioValid(jTxtScenario.getText())).equals("YES")) {
-            ThreadRunner tr = new ThreadRunner(jTxtScenario.getText());
+        if ((msg = isScenarioValid(jTxtScenario.getText())).equals("YES")) {// checks if the set of opertion is valid
+            ThreadRunner tr = new ThreadRunner(jTxtScenario.getText());// beings the excutions
             tr.start();
         } else {
-            JOptionPane.showMessageDialog(null, "Invalid Scneario!\nError:" + msg, "Validation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid Scneario!\nError:" + msg, "Validation", JOptionPane.INFORMATION_MESSAGE);// error meassage when the sequence is not in valid format
 
         }
     }//GEN-LAST:event_jBtnBeginActionPerformed
@@ -646,32 +646,32 @@ public class SimulatorWindow extends javax.swing.JFrame {
 
     private void jBtnGenRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGenRandomActionPerformed
         double writeThreshold = 0.5;
-        if (jCmbDominant.getSelectedIndex() == 0) {
-            writeThreshold = 0.8;
+        if (jCmbDominant.getSelectedIndex() == 0) {// checks if wrtie dominant is selected or read dominant
+            writeThreshold = 0.8;// if write dominant is selected 
         } else if (jCmbDominant.getSelectedIndex() == 1) {
             writeThreshold = 0.2;
         } else {
 
         }
-        int proc = Integer.parseInt(jTxtNumProc.getText());
-        int ramBlocks = Integer.parseInt(jTxtNumBlockMainMemory.getText());
+        int proc = Integer.parseInt(jTxtNumProc.getText());// get the number of processor entered
+        int ramBlocks = Integer.parseInt(jTxtNumBlockMainMemory.getText());// get the number of block for main memory entered 
         String seq = "";
-        for (int i = 0; i < Integer.parseInt(jTxtNumOps.getText()); i++) {
+        for (int i = 0; i < Integer.parseInt(jTxtNumOps.getText()); i++) {// loop runs for number of operation that has been selected
 
-            int selctedProc = SimulatorWindow.selectBasedOnRandom(proc, Math.random());
-            int selectedBlock = SimulatorWindow.selectBasedOnRandom(ramBlocks, Math.random());
+            int selctedProc = SimulatorWindow.selectBasedOnRandom(proc, Math.random());// gets the random number for the processor
+            int selectedBlock = SimulatorWindow.selectBasedOnRandom(ramBlocks, Math.random());// gets the random number for the blocks in the local cache
             //  System.out.println("!!-"+i);
-            seq += "P-" + selctedProc + ":B-" + selectedBlock + ":";
-            if (Math.random() > writeThreshold) {
-                seq += "R";
+            seq += "P-" + selctedProc + ":B-" + selectedBlock + ":";// add the random number of processor and the random number of block to the sequence
+            if (Math.random() > writeThreshold) {//based upon the generated random number either read operation or write operation will be selected
+                seq += "R";// add read operation to the sequence
             } else {
-                seq += "W:" + Math.round(Math.random() * 100);
+                seq += "W:" + Math.round(Math.random() * 100);// add the write operation and the value to the sequence
             }
-            if (i < Integer.parseInt(jTxtNumOps.getText()) - 1) {
+            if (i < Integer.parseInt(jTxtNumOps.getText()) - 1) {// checks the number of operation still remaining
                 seq += ",";
             }
         }
-        SimulatorWindow.jTxtScenario.setText(seq);
+        SimulatorWindow.jTxtScenario.setText(seq);// set the generated random sequence to the text field
 
     }//GEN-LAST:event_jBtnGenRandomActionPerformed
 
@@ -679,32 +679,32 @@ public class SimulatorWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         double numberOfOps = 0, numberOfReads = 0, numberOfWrites = 0;
         double distRead=0,distWrite=0,totalReadDist=0,totalWriteDist=0;
-        String scenario = SimulatorWindow.jTxtScenario.getText();
-        String[] ops = scenario.split(",");
+        String scenario = SimulatorWindow.jTxtScenario.getText();// gets the sequence entered in the text field
+        String[] ops = scenario.split(",");// splits the each operation from the sequence and add each opeartion to the "ops" array
         for (String op : ops) {
-            String[] details = op.split(":");
+            String[] details = op.split(":");// splits each operation into processor number, block number and the operation
             numberOfOps++;
             if (details[2].equals("W")) {
-                numberOfWrites++;
+                numberOfWrites++;// increment the number of write operation when write opeartion is selected
                 totalWriteDist+=distWrite;
                 distWrite=0;
             } else {
-                numberOfReads++;
+                numberOfReads++;// increment the number of read operation when read opeartion is selected
                 totalReadDist+=distRead;
                 distRead=0;
             }
             distRead++;
             distWrite++;
         }
-        JOptionPane.showMessageDialog(null,  "Total Operations:_______"+numberOfOps
-                                           + "\nTotal Reads:___________"+numberOfReads+""
-                                            +"\nTotal Writes:___________"+numberOfWrites
-                                           + "\nReads per Block:_______"+(double)(numberOfReads/UserChoices.numberOfBlocksMain)
-                                           + "\nWrites per Block:_______"+(double)(numberOfWrites/UserChoices.numberOfBlocksMain)
-                                           + "\nDistance per Write:_____"+(double)(totalWriteDist/numberOfWrites)
-                                           + "\nDistance per Read:_____"+(double)(totalReadDist/numberOfReads), "Analysis", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null,  "Total Operations:_______"+numberOfOps// display the number of opration performed
+                                           + "\nTotal Reads:___________"+numberOfReads+""// number of read opeartion performed
+                                            +"\nTotal Writes:___________"+numberOfWrites// number of write operation performed
+                                           + "\nReads per Block:_______"+(double)(numberOfReads/UserChoices.numberOfBlocksMain)// number of read operation per block
+                                           + "\nWrites per Block:_______"+(double)(numberOfWrites/UserChoices.numberOfBlocksMain)// number of write operation per block
+                                           + "\nDistance per Write:_____"+(double)(totalWriteDist/numberOfWrites)// number of operation taken between two write opeartion
+                                           + "\nDistance per Read:_____"+(double)(totalReadDist/numberOfReads), "Analysis", JOptionPane.INFORMATION_MESSAGE);// number of operation performed between the two read operation
     }//GEN-LAST:event_jBtnAnalyzeActionPerformed
-    public static int selectBasedOnRandom(int cnt, double selector) {
+    public static int selectBasedOnRandom(int cnt, double selector) {// used to get the random processor number and block number for generating random sequence
         //System.out.println("Count="+cnt+" Selector="+selector);
         double tempCounter = (double) ((double) 1 / (double) cnt);
         double temp = tempCounter;
@@ -716,7 +716,7 @@ public class SimulatorWindow extends javax.swing.JFrame {
         return x;
     }
 
-    public static void updateSequenceExecutionStatus() {
+    public static void updateSequenceExecutionStatus() {// display the status of blocks in the main memory
         //  System.out.println("!!!!!!");
         String status = "Main Memory = {";
         for (int i = 0; i < Exec.ram.numberOfBlocks; i++) {
@@ -728,7 +728,7 @@ public class SimulatorWindow extends javax.swing.JFrame {
         }
         status += "------------------------------------------------------------------------------------------------------------\n";
 
-        for (int i = 0; i < Exec.processors.length; i++) {
+        for (int i = 0; i < Exec.processors.length; i++) {// displays the status of the block and also the state of the block for each processor
             status += "P-" + i + ":{";
             for (int j = 0; j < Exec.processors[i].localCache.length; j++) {
                 if (Exec.processors[i].localCache[j].isOccupied) {
@@ -741,20 +741,20 @@ public class SimulatorWindow extends javax.swing.JFrame {
         SimulatorWindow.jTxtSequenceExec.setText(status);
     }
 
-    public static String isScenarioValid(String scenario) {
+    public static String isScenarioValid(String scenario) {// checks if the sequence in the text field is valid or not
 
-        if (scenario.length() == 0) {
+        if (scenario.length() == 0) { // if no sequence is entered
             return "Empty Scenario.";
         }
-        if (scenario.length() < 8) {
+        if (scenario.length() < 8) {// the entered sequence is not in valid format
             return "Incomplete Scenario.";
         }
-        String[] allOps = scenario.split(",");
+        String[] allOps = scenario.split(",");// splits the each operation from the sequence and add the set of operation to "allops" array
         for (String op : allOps) {
-            if (op.length() < 8) {
+            if (op.length() < 8) { 
                 return "Incomplete Scenario.";
             }
-            String[] tempArr = op.split(":");
+            String[] tempArr = op.split(":");// splits each operation into processor number, block number , operation and the value if present
             //processor id validation
             if (tempArr[0].charAt(0) != 'P' || tempArr[0].charAt(1) != '-') {
                 return "Invalid Processor:" + tempArr[0];

@@ -7,7 +7,7 @@ package cachecoherencesimulator;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public class EvalParam {
     public int cacheReadMisses;

@@ -9,7 +9,7 @@ import cachecoherencesimulator.*;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public class Firefly implements ProtocolInterface {
 
@@ -17,14 +17,14 @@ public class Firefly implements ProtocolInterface {
     public void localRead(int procID, int blockID, boolean isShared) {
         SimulatorWindow.evaluator.cntMessagesOnBus++;
 
-        if (!Exec.processors[procID].containsBlock(blockID)) {
+        if (!Exec.processors[procID].containsBlock(blockID)) {// checks if the block is not present in the local cache of the processor
             //cache read miss
             SimulatorWindow.evaluator.cacheReadMisses++;
 
             // System.out.println("Read miss proc:"+procID+" block:"+blockID);
-            int loc = Exec.processors[procID].getALocationToPlaceBlock();
-            if (Exec.processors[procID].localCache[loc].isOccupied && (Exec.processors[procID].localCache[loc].blockState == StateEnum.D)) {
-                Exec.ram.values[Exec.processors[procID].localCache[loc].blockID] = Exec.processors[procID].localCache[loc].value;
+            int loc = Exec.processors[procID].getALocationToPlaceBlock();// get the new location for the block that is fetched from the main memory
+            if (Exec.processors[procID].localCache[loc].isOccupied && (Exec.processors[procID].localCache[loc].blockState == StateEnum.D)) {//checks if the block is in dirty state
+                Exec.ram.values[Exec.processors[procID].localCache[loc].blockID] = Exec.processors[procID].localCache[loc].value;// perfrom write back operation
                 SimulatorWindow.evaluator.cntWriteBacks++;
             }
             double temp = Double.MIN_VALUE;
@@ -38,39 +38,39 @@ public class Firefly implements ProtocolInterface {
             if (temp != Double.MIN_VALUE) {
 
                 if (isShared) {
-                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.S, temp, 0, true);
+                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.S, temp, 0, true);// block state will be shared state
                 } else {
-                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.VE, temp, 0, true);
+                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.VE, temp, 0, true);// block state will be in valid-exclusive state
                 }
             } else {
                 SimulatorWindow.evaluator.cntReadsFromRam++;
                 // System.out.println("!!");
                 if (isShared) {
-                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.S, Exec.ram.values[blockID], 0, true);
+                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.S, Exec.ram.values[blockID], 0, true);// block state will be shared and read the value from the main memory
                 } else {
-                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.VE, Exec.ram.values[blockID], 0, true);
+                    Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.VE, Exec.ram.values[blockID], 0, true);// block state will be in valid-exclusive and read the value from the main memory
                 }
             }
 
             return;
         }
 
-        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);
+        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);// selects the block from the local cache of the processor
 
         switch (tempBlock.blockState) {
             case VE:
                 if (isShared) {
-                    tempBlock.blockState = StateEnum.S;
+                    tempBlock.blockState = StateEnum.S;//block changes its state to shared state
                 } else {
-                    SimulatorWindow.evaluator.cntMessagesOnBus--;
+                    SimulatorWindow.evaluator.cntMessagesOnBus--;// block will be in valid-exclusive state
                 }
                 break;
             case S:
                 if (!isShared) {
-                    tempBlock.blockState = StateEnum.VE;
+                    tempBlock.blockState = StateEnum.VE;// block will be in valid-exclusive state
                 }
                 break;
-            case D:
+            case D:// block will be in dirty state
                 break;
         }
     }
@@ -78,13 +78,13 @@ public class Firefly implements ProtocolInterface {
     @Override
     public void localWrite(int procID, int blockID, boolean isShared) {
         SimulatorWindow.evaluator.cntMessagesOnBus+=2;
-        if (!Exec.processors[procID].containsBlock(blockID)) {
+        if (!Exec.processors[procID].containsBlock(blockID)) {// checks if the block is not present in the local cache of the processor
             //cache write miss
             SimulatorWindow.evaluator.cacheWriteMisses++;
            // SimulatorWindow.evaluator.cntReadsFromRam++;
-            int loc = Exec.processors[procID].getALocationToPlaceBlock();
-            if (Exec.processors[procID].localCache[loc].isOccupied && (Exec.processors[procID].localCache[loc].blockState == StateEnum.D)) {
-                Exec.ram.values[Exec.processors[procID].localCache[loc].blockID] = Exec.processors[procID].localCache[loc].value;
+            int loc = Exec.processors[procID].getALocationToPlaceBlock();// get the new location for the block that is fetched from the main memory
+            if (Exec.processors[procID].localCache[loc].isOccupied && (Exec.processors[procID].localCache[loc].blockState == StateEnum.D)) {//checks if the block is in dirty state
+                Exec.ram.values[Exec.processors[procID].localCache[loc].blockID] = Exec.processors[procID].localCache[loc].value;//perfrom the write back operation
                 SimulatorWindow.evaluator.cntWriteBacks++;
             }
             double temp = Double.MIN_VALUE;
@@ -97,11 +97,11 @@ public class Firefly implements ProtocolInterface {
             }
             if (temp != Double.MIN_VALUE) {
 
-                Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.D, temp, 0, true);
+                Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.D, temp, 0, true);// block will be in diry state
 
             } else {
                 SimulatorWindow.evaluator.cntReadsFromRam++;
-                Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.D, Exec.ram.values[blockID], 0, true);
+                Exec.processors[procID].localCache[loc] = new LocalCacheBlock(blockID, StateEnum.D, Exec.ram.values[blockID], 0, true);// block will be in dirty state and get the value from the main memory
 
             }
 
@@ -114,17 +114,17 @@ public class Firefly implements ProtocolInterface {
             }
             return;
         }
-        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);
+        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);// selects the block from the local cache of the processor
 
         switch (tempBlock.blockState) {
             case VE:
-                tempBlock.blockState = StateEnum.D;
+                tempBlock.blockState = StateEnum.D;// block will change its state to dirty state
                 SimulatorWindow.evaluator.cntMessagesOnBus--;
                 break;
             case S:
-                tempBlock.blockState = StateEnum.D;
+                tempBlock.blockState = StateEnum.D;// block wll change its state to dirty
                 break;
-            case D:
+            case D:// block will be in dirty state
 
                 for (int x = 0; x < Exec.processors.length; x++) {
                     for (int z = 0; z < Exec.processors[x].localCache.length; z++) {
@@ -140,18 +140,18 @@ public class Firefly implements ProtocolInterface {
 
     @Override
     public void remoteRead(int procID, int blockID) {
-        if (!Exec.processors[procID].containsBlock(blockID)) {
+        if (!Exec.processors[procID].containsBlock(blockID)) {// check if the block is not present in the local cache of the processor
             return;
         }
-        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);
+        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);// selects the block from the loacl cache of the processor
         switch (tempBlock.blockState) {
             case VE:
-                tempBlock.blockState = StateEnum.S;
+                tempBlock.blockState = StateEnum.S;// block will change its state to shared state
                 break;
-            case S:
+            case S:// block will be in shared state
                 break;
             case D:
-                tempBlock.blockState = StateEnum.S;
+                tempBlock.blockState = StateEnum.S;// block will change its state to shared state
                 break;
 
         }
@@ -159,18 +159,18 @@ public class Firefly implements ProtocolInterface {
 
     @Override
     public void remoteWrite(int procID, int blockID, double value) {
-        if (!Exec.processors[procID].containsBlock(blockID)) {
+        if (!Exec.processors[procID].containsBlock(blockID)) {// check if the block is not present in the local cache of the processor
             return;
         }
-        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);
+        LocalCacheBlock tempBlock = Exec.getBlock(procID, blockID);//selects the block from the local cache of the processor
         switch (tempBlock.blockState) {
             case VE:
-                tempBlock.blockState = StateEnum.S;
+                tempBlock.blockState = StateEnum.S;// block will change its state to shared state
                 break;
-            case S:
+            case S:// block will be in shared state
                 break;
             case D:
-                tempBlock.blockState = StateEnum.S;
+                tempBlock.blockState = StateEnum.S;// block will change its state to shared state
                 break;
 
         }

@@ -7,7 +7,7 @@ package cachecoherencesimulator;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public class Exec {
 
@@ -19,53 +19,53 @@ public class Exec {
     public static SharedMemory ram;
 
     public static void executeScenario(String scenario) throws InterruptedException {
-        SimulatorWindow.setControllerState(false);
-        processors = new Processor[UserChoices.numberOfProcessors];
+        SimulatorWindow.setControllerState(false);// disable all the text field during the excution 
+        processors = new Processor[UserChoices.numberOfProcessors];// create the number of processor object based upon the number of processor entered
         for (int i = 0; i < UserChoices.numberOfProcessors; i++) {
-            processors[i] = new Processor(UserChoices.numberOfBlocksLocal);
+            processors[i] = new Processor(UserChoices.numberOfBlocksLocal);// asign the number of blocks entered to each processor
         }
-        ram = new SharedMemory(UserChoices.numberOfBlocksMain);
+        ram = new SharedMemory(UserChoices.numberOfBlocksMain);// assign the number of block to main memory
         UserChoices.updateProtocolObject();
-        String[] ops = scenario.split(",");
+        String[] ops = scenario.split(",");// separate each operation from the sequence and add it to the array "ops"
         for (int i = 0; i < ops.length; i++) {
-            String[] spec = ops[i].split(":");
-            int procId = Exec.getID(spec[0]);
-            int blockId = Exec.getID(spec[1]);
+            String[] spec = ops[i].split(":");// splits the each operation by processor number, block number, operation selected and the value for write operation
+            int procId = Exec.getID(spec[0]);// gets the processor ID
+            int blockId = Exec.getID(spec[1]);// gets the block ID
             for (int k = 0; k < processors[procId].localCache.length; k++) {
-                if (processors[procId].localCache[k].blockID != blockId) {
-                    processors[procId].localCache[k].lastUsed++;
+                if (processors[procId].localCache[k].blockID != blockId) {// checks if the blcokID given is not present in the processor local cache
+                    processors[procId].localCache[k].lastUsed++;// if above condition is true then the lastused variable will be incremented
                 }
             }
             String op = spec[2];
             double val = 0;
             if (op.equals("W")) {
-                val = Double.parseDouble(spec[3]);
+                val = Double.parseDouble(spec[3]);// if the write operation is selected then the value that has to be written will be selected 
             }
 
             if (op.equals("R")) {
-                Bus.readBlock(processors, procId, blockId);
+                Bus.readBlock(processors, procId, blockId);// perfrom read operation
             } else {
-                Bus.writeBlock(processors, procId, blockId, val);
+                Bus.writeBlock(processors, procId, blockId, val);// perfrom write operation
             }
             SimulatorWindow.updateSequenceExecutionStatus();
-            Thread.sleep(500);
+            Thread.sleep(500);// use to set the delay in excuting
         }
         for(int x=0;x<processors.length;x++){
             for(int z=0;z<processors[x].localCache.length;z++){
                 if(processors[x].localCache[z].blockState==StateEnum.D ||
                         processors[x].localCache[z].blockState==StateEnum.M ||
                         processors[x].localCache[z].blockState==StateEnum.SD){
-                    ram.values[processors[x].localCache[z].blockID]=processors[x].localCache[z].value;
-                    SimulatorWindow.evaluator.cntWriteBacks++;
+                    ram.values[processors[x].localCache[z].blockID]=processors[x].localCache[z].value;//peforms write back operation when the block is in dirty state or modify state or shared dirty state
+                    SimulatorWindow.evaluator.cntWriteBacks++;// when write back operation is performed the write back variable will be incremented 
                 }
                 
             }
         }
-        SimulatorWindow.setControllerState(true);
+        SimulatorWindow.setControllerState(true);// the text fields in the simulator will be enabled when the excution is finished
         SimulatorWindow.updateEvalParamBox();
     }
 
-    public static boolean isThisBlockExclusive(int block) {
+    public static boolean isThisBlockExclusive(int block) {// check if the block is exclusive
         System.out.println("" + Exec.processors.length);
         for (int i = 0; i < Exec.processors.length; i++) {
             for (int j = 0; j < Exec.processors[i].localCache.length; j++) {
@@ -79,7 +79,7 @@ public class Exec {
         return true;
     }
 
-    public static LocalCacheBlock getBlock(int procID, int blockID) {
+    public static LocalCacheBlock getBlock(int procID, int blockID) {// get the block id
         for (int i = 0; i < processors[procID].localCache.length; i++) {
             if (blockID == processors[procID].localCache[i].blockID) {
                 return processors[procID].localCache[i];

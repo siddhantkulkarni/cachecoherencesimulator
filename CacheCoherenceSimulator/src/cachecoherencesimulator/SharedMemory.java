@@ -7,7 +7,7 @@ package cachecoherencesimulator;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public class SharedMemory {
     public int numberOfBlocks;
@@ -15,9 +15,9 @@ public class SharedMemory {
 
     public SharedMemory(int numberOfBlocks) {
         this.numberOfBlocks = numberOfBlocks;
-        values=new double[numberOfBlocks];
+        values=new double[numberOfBlocks];// create the object based upon the number of the block persent in the main memory
         for(int i=0;i<this.numberOfBlocks;i++){
-            values[i]=0;
+            values[i]=0;// initial value of the block in the main memory will be assigned to zero
         }
     }
     

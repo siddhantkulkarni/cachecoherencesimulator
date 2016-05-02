@@ -7,8 +7,8 @@ package cachecoherencesimulator;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public enum StateEnum {
-    M,S,E,O,R,I,SC,SD,D,VE,V;
+    M,S,E,O,R,I,SC,SD,D,VE,V;// states of the block in the local cache
 }

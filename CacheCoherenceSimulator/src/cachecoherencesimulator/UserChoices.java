@@ -10,7 +10,7 @@ import cachecoherencesimulator.protocols.*;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public class UserChoices {
 
@@ -23,7 +23,7 @@ public class UserChoices {
     public static ProtocolInterface useProtocol;
 
     public static void updateProtocolObject() {
-        switch (protocol) {
+        switch (protocol) {// selects the selected protocol
             case MSI:
                 useProtocol = new MSI();
                 break;

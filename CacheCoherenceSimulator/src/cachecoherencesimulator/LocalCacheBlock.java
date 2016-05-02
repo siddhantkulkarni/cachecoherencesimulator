@@ -7,7 +7,7 @@ package cachecoherencesimulator;
 
 /**
  *
- * @author Siddhant Kulkarni
+ * @author Team 4 - Siddhant Kulkarni, Ritesh Sangurmath, Ranjan Yadav
  */
 public class LocalCacheBlock{
     public int blockID;
@@ -16,7 +16,7 @@ public class LocalCacheBlock{
     public int lastUsed;
     public boolean isOccupied;
 
-    public LocalCacheBlock() {
+    public LocalCacheBlock() {// initially all the block will be assigned as not occupied
         isOccupied=false;
     }
 
